@@ -1,0 +1,198 @@
+<div class="pagina">
+
+    <h1>Consultorio Odontológico</h1>
+    <p class="subtitulo">Administración de citas, tratamientos y pagos</p>
+
+    @if (mensaje()) {
+    <p class="mensaje">
+        {{ mensaje() }}
+    </p>
+    }
+
+    @if (error()) {
+    <p class="error">
+        {{ error() }}
+    </p>
+    }
+
+
+    <div class="contenedor">
+
+        <h2>Registrar Cita</h2>
+        <form [formGroup]="formularioCita" (ngSubmit)="registrarCita()">
+
+            <label>Fecha:</label>
+            <input type="date" formControlName="fecha">
+
+            <label>Hora:</label>
+            <input type="time" formControlName="hora">
+
+            <label>ID Paciente:</label>
+            <input type="number" formControlName="idPaciente">
+
+            <label>ID Odontólogo:</label>
+            <input type="number" formControlName="idOdontologo">
+
+            <button type="submit">
+                Registrar Cita
+            </button>
+        </form>
+
+        <h3>Citas Registradas</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Odontólogo</th>
+                    <th>Especialidad</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for (cita of citas(); track cita.id) {
+
+                <tr>
+                    <td>{{ cita.id }}</td>
+                    <td>{{ cita.paciente }}</td>
+                    <td>{{ cita.odontologo }}</td>
+                    <td>{{ cita.especialidad }}</td>
+                    <td>{{ cita.fecha }}</td>
+                    <td>{{ cita.hora }}</td>
+                    <td>{{ cita.estado }}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="contenedor">
+
+        <h2>Registrar Tratamiento</h2>
+        <form [formGroup]="formularioTratamiento" (ngSubmit)="registrarTratamiento()">
+            <label>Nombre:</label>
+            <input type="text" formControlName="nombre">
+
+            <label>Descripción:</label>
+            <input type="text" formControlName="descripcion">
+
+            <label>Precio:</label>
+            <input type="number" step="0.01" formControlName="precio">
+
+            <label>Fecha:</label>
+            <input type="date" formControlName="fecha">
+
+            <label>Observación:</label>
+            <input type="text" formControlName="observacion">
+
+            <label>ID Paciente:</label>
+            <input type="number" formControlName="idPaciente">
+
+            <label>ID Odontólogo:</label>
+            <input type="number" formControlName="idOdontologo">
+
+            <button type="submit">
+                Registrar Tratamiento
+            </button>
+        </form>
+
+
+        <h3>Tratamientos Registrados</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Tratamiento</th>
+                    <th>Precio</th>
+                    <th>Pagado</th>
+                    <th>Saldo Pendiente</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                @for (tratamiento of tratamientos(); track tratamiento.id) {
+                <tr>
+                    <td>{{ tratamiento.id }}</td>
+                    <td>{{ tratamiento.paciente }}</td>
+                    <td>{{ tratamiento.tratamiento }}</td>
+                    <td>${{ tratamiento.precio }}</td>
+                    <td>${{ tratamiento.total_pagado }}</td>
+                    <td>${{ tratamiento.saldo_pendiente }}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+
+
+    <div class="contenedor">
+
+        <h2>Registrar Pago</h2>
+        <form [formGroup]="formularioPago" (ngSubmit)="registrarPago()">
+            <label>Monto:</label>
+            <input type="number" step="0.01" formControlName="monto">
+
+            <label>Método de Pago:</label>
+
+            <select formControlName="metodoPago">
+                <option value="EFECTIVO">
+                    Efectivo
+                </option>
+
+                <option value="TARJETA">
+                    Tarjeta
+                </option>
+
+                <option value="TRANSFERENCIA">
+                    Transferencia
+                </option>
+            </select>
+
+            <label>ID Tratamiento:</label>
+            <input type="number" formControlName="idTratamiento">
+
+            <button type="submit">
+                Registrar Pago
+            </button>
+        </form>
+
+        <h3>Pagos Registrados</h3>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Paciente</th>
+                    <th>Tratamiento</th>
+                    <th>Monto</th>
+                    <th>Fecha</th>
+                    <th>Método</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @for (pago of pagos(); track pago.id_pago) {
+                <tr>
+                    <td>{{ pago.id_pago }}</td>
+                    <td>{{ pago.paciente }}</td>
+                    <td>{{ pago.tratamiento }}</td>
+                    <td>${{ pago.monto }}</td>
+                    <td>{{ pago.fecha }}</td>
+                    <td>{{ pago.metodo_pago }}</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
